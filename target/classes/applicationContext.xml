@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="dic.properties"/>
+
+    <bean id="searchDic"
+          class="mmtr.spring.dictionary.SearchDictionary">
+        <property name="path" value="${dci.pathToSearch}"/>
+    </bean>
+
+    <bean id="chooseDic"
+          class="mmtr.spring.dictionary.DictionarySelection">
+    </bean>
+
+    <bean id="readFromFile"
+          class="mmtr.spring.dictionary.ReadAllFromFile">
+        <property name="path" value="${dci.pathToSearch}"/>
+        <property name="dictionarySelection" ref="chooseDic"/>
+    </bean>
+
+    <bean id="dictionaryReader"
+          class="mmtr.spring.dictionary.DictionaryReader">
+        <constructor-arg name="filePath" value="${dci.pathToSearch}"/>
+        <constructor-arg name="dictionarySelection" ref="chooseDic"/>
+    </bean>
+
+    <bean id="searchByKey"
+          class="mmtr.spring.dictionary.SearchByKey">
+        <constructor-arg name="path" value="${dci.pathToSearch}"/>
+        <constructor-arg name="dictionarySelection" ref="chooseDic"/>
+    </bean>
+
+    <bean id="deleteByKey"
+          class="mmtr.spring.dictionary.DeleteByKey">
+        <constructor-arg name="path" value="${dci.pathToSearch}"/>
+        <constructor-arg name="dictionarySelection" ref="chooseDic"/>
+    </bean>
+
+    <bean id="addByKey"
+          class="mmtr.spring.dictionary.AddValuesToFile">
+        <constructor-arg name="path" value="${dci.pathToSearch}"/>
+        <constructor-arg name="dictionarySelection" ref="chooseDic"/>
+    </bean>
+</beans>
